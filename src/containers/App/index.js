@@ -1,17 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Flex } from '@chakra-ui/core';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { Flex } from '@chakra-ui/core';
 import styled from '@emotion/styled';
 import { Global } from '@emotion/core';
 
 import NotFoundPage from 'containers/NotFoundPage';
-import HomePage from 'containers/HomePage';
+import LaunchesPage from 'containers/LaunchesPage';
+import Container from 'components/elements/Container';
+import ScrollToTop from 'components/behaviors/ScrollToTop';
 
 const AppWrapper = styled(Flex)`
   flex-direction: column;
   min-height: 100vh;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.offWhite};
   overflow-x: hidden;
 `;
 
@@ -32,10 +39,21 @@ function App() {
             },
           }}
         ></Global>
-        <Switch>
-          <Route exact path="/" component={HomePage}></Route>
-          <Route component={NotFoundPage}></Route>
-        </Switch>
+        <ScrollToTop></ScrollToTop>
+        <Container>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => <Redirect to="launches/1"></Redirect>}
+            ></Route>
+            <Route
+              path="/launches/:page([1-3])"
+              component={LaunchesPage}
+            ></Route>
+            <Route component={NotFoundPage}></Route>
+          </Switch>
+        </Container>
       </AppWrapper>
     </Router>
   );
