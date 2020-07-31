@@ -63,7 +63,7 @@ export default function Pagination({
 
   return (
     <Stack isInline justifyContent="space-between" {...props}>
-      <Stack isInline spacing={1}>
+      <Stack isInline spacing={'1px'}>
         {mapIndexed(
           (item, index) => (
             <Button

@@ -11,7 +11,7 @@ export const GET_LAUNCHES = gql`
     launchesPast(offset: $offset, limit: $limit) {
       id
       mission_name
-      launch_date_local
+      launch_date_utc
       links {
         flickr_images
         wikipedia
