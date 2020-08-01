@@ -14,11 +14,13 @@ import NotFoundPage from 'containers/NotFoundPage';
 import LaunchesPage from 'containers/LaunchesPage';
 import Container from 'components/elements/Container';
 import ScrollToTop from 'components/behaviors/ScrollToTop';
+import AboutPage from 'containers/AboutPage';
+import { getPath } from 'lib/utils';
 
 const AppWrapper = styled(Flex)`
   flex-direction: column;
   min-height: 100vh;
-  background-color: ${({ theme }) => theme.colors.offWhite};
+  background-color: ${({ theme }) => getPath('colors.gray.0', theme)};
   overflow-x: hidden;
 `;
 
@@ -42,15 +44,14 @@ function App() {
         <ScrollToTop></ScrollToTop>
         <Container>
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => <Redirect to="launches/1"></Redirect>}
-            ></Route>
+            <Route exact path="/">
+              <Redirect to="/launches/1"></Redirect>
+            </Route>
             <Route
               path="/launches/:page([1-3])"
               component={LaunchesPage}
             ></Route>
+            <Route path="/about" component={AboutPage}></Route>
             <Route component={NotFoundPage}></Route>
           </Switch>
         </Container>

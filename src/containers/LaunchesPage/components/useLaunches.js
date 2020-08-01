@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import equals from 'ramda/src/equals';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { usePrevious } from 'react-use';
 import { useLazyQuery, gql } from '@apollo/client';
 
@@ -24,9 +24,7 @@ export const GET_LAUNCHES = gql`
 
 // //////////////////////////////////////////////////////////////////////
 
-function useLaunches(limit = 12) {
-  let { page: activePage } = useParams();
-
+function useLaunches(activePage = 1, limit = 12) {
   const location = useLocation();
   const previousLocation = usePrevious(location);
   const [getLaunches, query] = useLazyQuery(GET_LAUNCHES);
@@ -38,10 +36,7 @@ function useLaunches(limit = 12) {
     });
   });
 
-  return {
-    query,
-    activePage,
-  };
+  return query;
 }
 
 export default useLaunches;

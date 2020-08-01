@@ -8,7 +8,7 @@ const fonts = {
 };
 
 const colors = {
-  offWhite: '#f4f7f6',
+  gray: { 0: '#f4f7f6' },
 };
 
 const icons = {

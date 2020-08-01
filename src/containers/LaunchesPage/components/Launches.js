@@ -1,8 +1,16 @@
 import * as R from 'ramda';
 import React from 'react';
-import { SimpleGrid, Box, List, ListItem, Text, Stack } from '@chakra-ui/core';
+import {
+  SimpleGrid,
+  Box,
+  List,
+  ListItem,
+  Text,
+  Stack,
+  Skeleton,
+} from '@chakra-ui/core';
 import { formatToTimeZone } from 'date-fns-timezone';
-import { randomInt, getPath, truncate } from 'lib/utils';
+import { randomInt, truncate } from 'lib/utils';
 
 import RolloverImage from './RolloverImage';
 import Title from './Title';
@@ -22,7 +30,7 @@ const getColor = R.cond([
 
 // //////////////////////////////////////////////////////////////////////
 
-const Launch = ({ item, ...props }) => {
+const Launch = ({ item = {}, isLoading, ...props }) => {
   const launchDate = formatToTimeZone(
     R.pathOr(new Date(), ['launch_date_utc'], item),
     'MM/DD/YYYY h:mm A',
@@ -33,25 +41,31 @@ const Launch = ({ item, ...props }) => {
 
   return (
     <Box {...props}>
-      <RolloverImage
-        src={getRandomImage(item)}
-        href={getPath(['links.wikipedia'], item)}
-      ></RolloverImage>
+      <Skeleton isLoaded={!isLoading}>
+        <RolloverImage
+          src={getRandomImage(item)}
+          href={R.pathOr('', ['links', 'wikipedia'], item)}
+        ></RolloverImage>
+      </Skeleton>
       <Stack shouldWrapChildren bg="white" padding={6}>
-        <Title highlightColor={getColor(getPath(['launch_success'], item))}>
-          {truncate(item.mission_name, 10, '-')}
-        </Title>
-        <Text
-          {...{
-            fontFamily: 'mono',
-            textAlign: 'right',
-            fontSize: 'xs',
-            fontWeight: '500',
-            color: 'gray.400',
-          }}
-        >
-          at {launchDate}
-        </Text>
+        <Skeleton height="30px" isLoaded={!isLoading}>
+          <Title highlightColor={getColor(R.pathOr(['launch_success'], item))}>
+            {truncate(R.pathOr('', ['mission_name'], item), 10, '-')}
+          </Title>
+        </Skeleton>
+        <Skeleton height="18px" isLoaded={!isLoading}>
+          <Text
+            {...{
+              fontFamily: 'mono',
+              textAlign: 'right',
+              fontSize: 'xs',
+              fontWeight: '500',
+              color: 'gray.400',
+            }}
+          >
+            at {launchDate}
+          </Text>
+        </Skeleton>
       </Stack>
     </Box>
   );
@@ -59,9 +73,7 @@ const Launch = ({ item, ...props }) => {
 
 // //////////////////////////////////////////////////////////////////////
 
-function Launches({ launches }) {
-  if (R.isEmpty(launches)) return null;
-
+function Launches({ launches, isLoading }) {
   return (
     <SimpleGrid
       {...{
@@ -72,7 +84,12 @@ function Launches({ launches }) {
     >
       {R.map(
         (item) => (
-          <Launch as={ListItem} key={`launch-${item.id}`} item={item}></Launch>
+          <Launch
+            isLoading={isLoading}
+            as={ListItem}
+            key={`launch-${item.id}`}
+            item={item}
+          ></Launch>
         ),
         launches,
       )}
