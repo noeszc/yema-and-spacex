@@ -16,6 +16,7 @@ import Container from 'components/elements/Container';
 import ScrollToTop from 'components/behaviors/ScrollToTop';
 import AboutPage from 'containers/AboutPage';
 import { getPath } from 'lib/utils';
+import Header from 'containers/Header';
 
 const AppWrapper = styled(Flex)`
   flex-direction: column;
@@ -42,7 +43,15 @@ function App() {
           }}
         ></Global>
         <ScrollToTop></ScrollToTop>
-        <Container>
+        <Header></Header>
+        <Container
+          {...{
+            as: 'main',
+            marginTop: 20,
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
           <Switch>
             <Route
               exact
