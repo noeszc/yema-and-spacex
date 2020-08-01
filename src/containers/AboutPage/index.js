@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useQuery, gql } from '@apollo/client';
 import { pick, propOr, dissocPath } from 'ramda';
 import { Box, Image, AspectRatioBox, Skeleton } from '@chakra-ui/core';
+
 import Hero from './components/Hero';
 import Footer from './components/Footer';
 
@@ -30,7 +31,7 @@ function AboutPage() {
   const aboutProps = propOr({}, ['company'], data);
 
   return (
-    <Box bg="white">
+    <Box bg="white" marginBottom={8}>
       <Helmet>
         <title>About</title>
         <meta name="description" content="About SpaceX" />

@@ -8,7 +8,7 @@ const fonts = {
 };
 
 const colors = {
-  gray: { 0: '#f4f7f6' },
+  gray: { 50: '#f4f7f6' },
 };
 
 const icons = {

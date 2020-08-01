@@ -20,7 +20,7 @@ import { getPath } from 'lib/utils';
 const AppWrapper = styled(Flex)`
   flex-direction: column;
   min-height: 100vh;
-  background-color: ${({ theme }) => getPath('colors.gray.0', theme)};
+  background-color: ${({ theme }) => getPath(['colors.gray.50'], theme)};
   overflow-x: hidden;
 `;
 
@@ -44,9 +44,11 @@ function App() {
         <ScrollToTop></ScrollToTop>
         <Container>
           <Switch>
-            <Route exact path="/">
-              <Redirect to="/launches/1"></Redirect>
-            </Route>
+            <Route
+              exact
+              path="/"
+              render={() => <Redirect to="/launches/1"></Redirect>}
+            ></Route>
             <Route
               path="/launches/:page([1-3])"
               component={LaunchesPage}

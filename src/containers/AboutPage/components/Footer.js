@@ -1,6 +1,7 @@
 import React from 'react';
 import { Stack, Skeleton, List, ListItem, Link } from '@chakra-ui/core';
 import * as R from 'ramda';
+
 function Footer({ isLoaded, links = {} }) {
   return (
     <Skeleton isLoaded={isLoaded}>
@@ -11,8 +12,7 @@ function Footer({ isLoaded, links = {} }) {
           fontSize: 'sm',
           isInline: true,
           justify: { base: 'left', lg: 'right' },
-          paddingX: 4,
-          paddingY: 12,
+          padding: 4,
         }}
       >
         {!R.isEmpty(links) &&
