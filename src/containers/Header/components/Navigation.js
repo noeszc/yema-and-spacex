@@ -30,7 +30,14 @@ function Navigation(props) {
   return (
     <Stack {...{ as: 'nav', isInline: true, spacing: 4 }} {...props}>
       <LinkWrapper>
-        <NavLink to="/launches/1">Launches</NavLink>
+        <NavLink
+          to="/"
+          isActive={(_, location) =>
+            /\/launches\/([1-3])$/.test(location.pathname)
+          }
+        >
+          Launches
+        </NavLink>
       </LinkWrapper>
       <LinkWrapper>
         <NavLink to="/about">About</NavLink>
